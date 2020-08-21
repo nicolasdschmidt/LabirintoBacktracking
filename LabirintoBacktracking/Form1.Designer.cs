@@ -42,7 +42,8 @@
             // btnEncontrar
             // 
             this.btnEncontrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEncontrar.Location = new System.Drawing.Point(641, 12);
+            this.btnEncontrar.Enabled = false;
+            this.btnEncontrar.Location = new System.Drawing.Point(847, 12);
             this.btnEncontrar.Name = "btnEncontrar";
             this.btnEncontrar.Size = new System.Drawing.Size(75, 39);
             this.btnEncontrar.TabIndex = 0;
@@ -53,7 +54,7 @@
             // btnAbrir
             // 
             this.btnAbrir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAbrir.Location = new System.Drawing.Point(560, 12);
+            this.btnAbrir.Location = new System.Drawing.Point(766, 12);
             this.btnAbrir.Name = "btnAbrir";
             this.btnAbrir.Size = new System.Drawing.Size(75, 39);
             this.btnAbrir.TabIndex = 1;
@@ -63,28 +64,33 @@
             // 
             // dgvLabirinto
             // 
-            this.dgvLabirinto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.dgvLabirinto.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvLabirinto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvLabirinto.Location = new System.Drawing.Point(12, 98);
+            this.dgvLabirinto.ColumnHeadersVisible = false;
+            this.dgvLabirinto.Location = new System.Drawing.Point(15, 57);
             this.dgvLabirinto.Name = "dgvLabirinto";
-            this.dgvLabirinto.Size = new System.Drawing.Size(300, 300);
+            this.dgvLabirinto.RowHeadersVisible = false;
+            this.dgvLabirinto.Size = new System.Drawing.Size(417, 433);
             this.dgvLabirinto.TabIndex = 2;
             // 
             // dgvCaminhos
             // 
-            this.dgvCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCaminhos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCaminhos.Location = new System.Drawing.Point(318, 98);
+            this.dgvCaminhos.Location = new System.Drawing.Point(445, 57);
             this.dgvCaminhos.Name = "dgvCaminhos";
-            this.dgvCaminhos.Size = new System.Drawing.Size(398, 300);
+            this.dgvCaminhos.Size = new System.Drawing.Size(477, 433);
             this.dgvCaminhos.TabIndex = 3;
             // 
             // lblLabirinto
             // 
-            this.lblLabirinto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblLabirinto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lblLabirinto.AutoSize = true;
-            this.lblLabirinto.Location = new System.Drawing.Point(13, 79);
+            this.lblLabirinto.Location = new System.Drawing.Point(12, 38);
             this.lblLabirinto.Name = "lblLabirinto";
             this.lblLabirinto.Size = new System.Drawing.Size(47, 13);
             this.lblLabirinto.TabIndex = 4;
@@ -92,19 +98,25 @@
             // 
             // lblCaminhos
             // 
-            this.lblCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCaminhos.AutoSize = true;
-            this.lblCaminhos.Location = new System.Drawing.Point(315, 79);
+            this.lblCaminhos.Location = new System.Drawing.Point(442, 38);
             this.lblCaminhos.Name = "lblCaminhos";
             this.lblCaminhos.Size = new System.Drawing.Size(115, 13);
             this.lblCaminhos.TabIndex = 5;
             this.lblCaminhos.Text = "Caminhos encontrados";
             // 
+            // dlgAbrirArquivo
+            // 
+            this.dlgAbrirArquivo.RestoreDirectory = true;
+            this.dlgAbrirArquivo.Title = "Procurar arquivos de labirinto";
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(728, 410);
+            this.ClientSize = new System.Drawing.Size(934, 505);
             this.Controls.Add(this.lblCaminhos);
             this.Controls.Add(this.lblLabirinto);
             this.Controls.Add(this.dgvCaminhos);
