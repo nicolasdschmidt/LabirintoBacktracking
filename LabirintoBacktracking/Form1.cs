@@ -27,6 +27,7 @@ namespace LabirintoBacktracking
 
             ArquivoParaLabirinto(dlgAbrirArquivo.FileName);
             LabirintoParaDataGridView();
+            btnEncontrar.Enabled = true;
         }
 
         private void btnEncontrar_Click(object sender, EventArgs e)
