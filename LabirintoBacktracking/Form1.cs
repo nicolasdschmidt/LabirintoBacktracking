@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LabirintoBacktracking
@@ -27,12 +21,43 @@ namespace LabirintoBacktracking
 
             ArquivoParaLabirinto(dlgAbrirArquivo.FileName);
             LabirintoParaDataGridView();
+            ColorirDataGridView();
             btnEncontrar.Enabled = true;
         }
 
         private void btnEncontrar_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ColorirDataGridView()
+        {
+            for (int i = 0; i < dgvLabirinto.RowCount; i++)
+            {
+                for (int j = 0; j < dgvLabirinto.ColumnCount; j++)
+                {
+                    DataGridViewCell celula = dgvLabirinto.Rows[i].Cells[j];
+                    char valor = lab.Dados[i, j];
+
+                    switch (valor)
+                    {
+                        case '#':
+                            celula.Style.BackColor = Color.Black;
+                            celula.Style.ForeColor = Color.Black;
+                            break;
+
+                        case ' ':
+                            celula.Style.BackColor = Color.White;
+                            celula.Style.ForeColor = Color.White;
+                            break;
+
+                        default:
+                            celula.Style.BackColor = Color.White;
+                            celula.Style.ForeColor = Color.Black;
+                            break;
+                    }
+                }
+            }
         }
 
         private void ArquivoParaLabirinto (string arquivo)
@@ -59,6 +84,9 @@ namespace LabirintoBacktracking
             int linhas = lab.Linhas;
             int colunas = lab.Colunas;
 
+            dgvLabirinto.Rows.Clear();
+            dgvLabirinto.Refresh();
+
             dgvLabirinto.ColumnCount = colunas;
 
             for (int i = 0; i < colunas; i++)
@@ -71,10 +99,17 @@ namespace LabirintoBacktracking
                 string[] linhaAtual = new string[colunas];
 
                 for (int j = 0; j < colunas; j++)
-                    linhaAtual[j] = lab.Dados[i, j] + "";
-                
+                {
+                    string atual = lab.Dados[i, j] + "";
+                    if (atual != "#")
+                        linhaAtual[j] = atual;
+                    else linhaAtual[j] = " ";
+                }
+
                 dgvLabirinto.Rows.Add(linhaAtual);
             }
+
+            dgvLabirinto.Refresh();
         }
     }
 }

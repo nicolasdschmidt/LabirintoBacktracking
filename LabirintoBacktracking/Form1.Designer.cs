@@ -64,6 +64,10 @@
             // 
             // dgvLabirinto
             // 
+            this.dgvLabirinto.AllowUserToAddRows = false;
+            this.dgvLabirinto.AllowUserToDeleteRows = false;
+            this.dgvLabirinto.AllowUserToResizeColumns = false;
+            this.dgvLabirinto.AllowUserToResizeRows = false;
             this.dgvLabirinto.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -71,17 +75,23 @@
             this.dgvLabirinto.ColumnHeadersVisible = false;
             this.dgvLabirinto.Location = new System.Drawing.Point(15, 57);
             this.dgvLabirinto.Name = "dgvLabirinto";
+            this.dgvLabirinto.ReadOnly = true;
             this.dgvLabirinto.RowHeadersVisible = false;
             this.dgvLabirinto.Size = new System.Drawing.Size(417, 433);
             this.dgvLabirinto.TabIndex = 2;
             // 
             // dgvCaminhos
             // 
+            this.dgvCaminhos.AllowUserToAddRows = false;
+            this.dgvCaminhos.AllowUserToDeleteRows = false;
+            this.dgvCaminhos.AllowUserToResizeColumns = false;
+            this.dgvCaminhos.AllowUserToResizeRows = false;
             this.dgvCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCaminhos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCaminhos.Location = new System.Drawing.Point(445, 57);
             this.dgvCaminhos.Name = "dgvCaminhos";
+            this.dgvCaminhos.ReadOnly = true;
             this.dgvCaminhos.Size = new System.Drawing.Size(477, 433);
             this.dgvCaminhos.TabIndex = 3;
             // 
