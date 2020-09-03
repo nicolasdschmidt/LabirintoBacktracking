@@ -27,7 +27,7 @@ namespace LabirintoBacktracking
 
         private void btnEncontrar_Click(object sender, EventArgs e)
         {
-
+            // TODO: Instanciar um Solucionador passando o Labirinto lab, e fazer um loop de resolução
         }
 
         private void ColorirDataGridView()

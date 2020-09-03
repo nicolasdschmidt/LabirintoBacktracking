@@ -54,9 +54,11 @@
     </Compile>
     <Compile Include="Labirinto.cs" />
     <Compile Include="Lista.cs" />
+    <Compile Include="Movimento.cs" />
     <Compile Include="Pilha.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solucionador.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
