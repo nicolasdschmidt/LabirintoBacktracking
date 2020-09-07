@@ -28,6 +28,14 @@ namespace LabirintoBacktracking
         private void btnEncontrar_Click(object sender, EventArgs e)
         {
             // TODO: Instanciar um Solucionador passando o Labirinto lab, e fazer um loop de resolução
+            Solucionador solucionador = new Solucionador(lab);
+            
+                for(int i = 0; i<45; i++)
+                {
+                    solucionador.DarUmPasso();
+                    dgvLabirinto[solucionador.GetColunaAtual(), solucionador.GetLinhaAtual()].Style.BackColor = Color.Blue;
+                }
+            
         }
 
         private void ColorirDataGridView()

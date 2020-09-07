@@ -8,14 +8,13 @@ namespace LabirintoBacktracking
 {
     class Movimento
     {
-        public int Linha { get; set; }
-        public int Coluna { get; set; }
-        public int Direcao { get; set; }
+        public int AlteradorLinha { get; set; }
+        public int AlteradorColuna { get; set; }
 
-        public Movimento (int linha, int coluna, int[,] direcao)
+        public Movimento (int linha, int coluna)
         {
-            Linha = linha;
-            Coluna = coluna;
+            AlteradorLinha = linha;
+            AlteradorColuna = coluna;
         }
     }
 }
