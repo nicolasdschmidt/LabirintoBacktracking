@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace LabirintoBacktracking
 {
@@ -121,6 +120,19 @@ namespace LabirintoBacktracking
             return ultimo.Info;
         }
 
+        public X Get(int index)
+        {
+            if (index >= GetQtd() || index < 0)
+                throw new Exception("Índice inválido");
+
+            No atual = primeiro;
+
+            for (int i = 0; i < index; i++)
+                atual = atual.Prox;
+
+            return atual.Info;
+        }
+
         public bool Vazia()
         {
             return primeiro == null;
@@ -138,6 +150,21 @@ namespace LabirintoBacktracking
             while (atual != null)
             {
                 ret++;
+                atual = atual.Prox;
+            }
+
+            return ret;
+        }
+
+        public string ToString()
+        {
+            string ret = "";
+
+            No atual = primeiro;
+
+            while (atual != null)
+            {
+                ret += atual.Info.ToString() + "; ";
                 atual = atual.Prox;
             }
 

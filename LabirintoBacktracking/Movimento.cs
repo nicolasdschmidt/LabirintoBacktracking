@@ -8,13 +8,18 @@ namespace LabirintoBacktracking
 {
     class Movimento
     {
-        public int AlteradorLinha { get; set; }
-        public int AlteradorColuna { get; set; }
+        public int Linha { get; set; }
+        public int Coluna { get; set; }
 
         public Movimento (int linha, int coluna)
         {
-            AlteradorLinha = linha;
-            AlteradorColuna = coluna;
+            Linha = linha;
+            Coluna = coluna;
+        }
+
+        public override string ToString()
+        {
+            return "[" + Linha + "," + Coluna + "]";
         }
     }
 }

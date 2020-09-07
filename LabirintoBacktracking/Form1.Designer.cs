@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnEncontrar = new System.Windows.Forms.Button();
             this.btnAbrir = new System.Windows.Forms.Button();
             this.dgvLabirinto = new System.Windows.Forms.DataGridView();
@@ -35,6 +36,7 @@
             this.lblLabirinto = new System.Windows.Forms.Label();
             this.lblCaminhos = new System.Windows.Forms.Label();
             this.dlgAbrirArquivo = new System.Windows.Forms.OpenFileDialog();
+            this.tmrSleep = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLabirinto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).BeginInit();
             this.SuspendLayout();
@@ -74,11 +76,13 @@
             this.dgvLabirinto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLabirinto.ColumnHeadersVisible = false;
             this.dgvLabirinto.Location = new System.Drawing.Point(15, 57);
+            this.dgvLabirinto.MultiSelect = false;
             this.dgvLabirinto.Name = "dgvLabirinto";
             this.dgvLabirinto.ReadOnly = true;
             this.dgvLabirinto.RowHeadersVisible = false;
             this.dgvLabirinto.Size = new System.Drawing.Size(417, 433);
             this.dgvLabirinto.TabIndex = 2;
+            this.dgvLabirinto.SelectionChanged += new System.EventHandler(this.dgvLabirinto_SelectionChanged);
             // 
             // dgvCaminhos
             // 
@@ -89,11 +93,15 @@
             this.dgvCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCaminhos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCaminhos.ColumnHeadersVisible = false;
             this.dgvCaminhos.Location = new System.Drawing.Point(445, 57);
+            this.dgvCaminhos.MultiSelect = false;
             this.dgvCaminhos.Name = "dgvCaminhos";
             this.dgvCaminhos.ReadOnly = true;
+            this.dgvCaminhos.RowHeadersVisible = false;
             this.dgvCaminhos.Size = new System.Drawing.Size(477, 433);
             this.dgvCaminhos.TabIndex = 3;
+            this.dgvCaminhos.SelectionChanged += new System.EventHandler(this.dgvCaminhos_SelectionChanged);
             // 
             // lblLabirinto
             // 
@@ -121,6 +129,11 @@
             // 
             this.dlgAbrirArquivo.RestoreDirectory = true;
             this.dlgAbrirArquivo.Title = "Procurar arquivos de labirinto";
+            // 
+            // tmrSleep
+            // 
+            this.tmrSleep.Interval = 150;
+            this.tmrSleep.Tick += new System.EventHandler(this.tmrSleep_Tick);
             // 
             // FormPrincipal
             // 
@@ -151,6 +164,7 @@
         private System.Windows.Forms.Label lblLabirinto;
         private System.Windows.Forms.Label lblCaminhos;
         private System.Windows.Forms.OpenFileDialog dlgAbrirArquivo;
+        private System.Windows.Forms.Timer tmrSleep;
     }
 }
 

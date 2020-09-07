@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,16 @@ namespace LabirintoBacktracking
         public void Adicionar(X i)
         {
             lista.InserirNoFim(i);
+        }
+
+        public int GetTamanho()
+        {
+            return lista.GetQtd();
+        }
+
+        public string ToString()
+        {
+            return lista.ToString();
         }
     }
 }

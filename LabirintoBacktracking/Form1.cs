@@ -8,6 +8,12 @@ namespace LabirintoBacktracking
     public partial class FormPrincipal : Form
     {
         Labirinto lab;
+        Solucionador solucionador;
+
+        int solucoes = 0;
+
+        int solucaoAtual = -1;
+        bool selecionarSolucoes = false;
 
         public FormPrincipal()
         {
@@ -27,15 +33,11 @@ namespace LabirintoBacktracking
 
         private void btnEncontrar_Click(object sender, EventArgs e)
         {
-            // TODO: Instanciar um Solucionador passando o Labirinto lab, e fazer um loop de resolução
-            Solucionador solucionador = new Solucionador(lab);
-            
-                for(int i = 0; i<45; i++)
-                {
-                    solucionador.DarUmPasso();
-                    dgvLabirinto[solucionador.GetColunaAtual(), solucionador.GetLinhaAtual()].Style.BackColor = Color.Blue;
-                }
-            
+            btnAbrir.Enabled = false;
+            btnEncontrar.Enabled = false;
+            solucionador = new Solucionador(lab);
+            tmrSleep.Enabled = true;
+            selecionarSolucoes = false;
         }
 
         private void ColorirDataGridView()
@@ -97,6 +99,12 @@ namespace LabirintoBacktracking
 
             dgvLabirinto.ColumnCount = colunas;
 
+            dgvCaminhos.Rows.Clear();
+            dgvCaminhos.ColumnCount = 1;
+            dgvCaminhos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dgvCaminhos.Rows.Add("...");
+            dgvCaminhos.Refresh();
+
             for (int i = 0; i < colunas; i++)
             {
                 dgvLabirinto.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -118,6 +126,56 @@ namespace LabirintoBacktracking
             }
 
             dgvLabirinto.Refresh();
+        }
+
+        private void tmrSleep_Tick(object sender, EventArgs e)
+        {
+            dgvLabirinto[solucionador.GetColunaAtual(), solucionador.GetLinhaAtual()].Style.BackColor = Color.LightSkyBlue;
+
+            bool achouSaida, fimDaLinha;
+            solucionador.DarUmPasso(out achouSaida, out fimDaLinha);
+
+            dgvLabirinto[solucionador.GetColunaAtual(), solucionador.GetLinhaAtual()].Style.BackColor = Color.DeepSkyBlue;
+
+            if (achouSaida)
+            {
+                Pilha<Movimento> solucao = solucionador.Solucoes.GetFim();
+
+                dgvCaminhos.Rows.Add(solucao.ToString());
+                solucoes++;
+            }
+
+            if (fimDaLinha)
+            {
+                tmrSleep.Enabled = false;
+                if (solucoes == 0)
+                {
+                    MessageBox.Show("Este labirinto não têm nenhuma saída!", "Sem saída", MessageBoxButtons.OK);
+                }
+                else {
+                    dgvCaminhos.Rows[0].Cells[0].Value = "Selecione uma solução para visualizar";
+                    selecionarSolucoes = true;
+                }
+
+                btnAbrir.Enabled = true;
+            }
+        }
+
+        private void dgvLabirinto_SelectionChanged(object sender, EventArgs e)
+        {
+            dgvLabirinto.ClearSelection();
+        }
+
+        private void dgvCaminhos_SelectionChanged(object sender, EventArgs e)
+        {
+            int row = dgvCaminhos.CurrentRow.Index;
+
+            if (selecionarSolucoes && row > 0 && row != solucaoAtual)
+            {
+                solucionador.SelecionarSolucao(row - 1);
+
+                while (solucionador.PassoSolucao()) { }
+            }
         }
     }
 }
