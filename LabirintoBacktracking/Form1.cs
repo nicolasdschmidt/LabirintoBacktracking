@@ -7,12 +7,14 @@ namespace LabirintoBacktracking
 {
     public partial class FormPrincipal : Form
     {
-        Labirinto lab;
+        Labirinto lab, copia;
         Solucionador solucionador;
+
+        Lista<Lista<Movimento>> solucoesLista;
 
         int solucoes = 0;
 
-        int solucaoAtual = -1;
+        int solucaoSelecionada = -1;
         bool selecionarSolucoes = false;
 
         public FormPrincipal()
@@ -26,18 +28,33 @@ namespace LabirintoBacktracking
             Text = "Caminhos em Labirinto - " + dlgAbrirArquivo.FileName;
 
             ArquivoParaLabirinto(dlgAbrirArquivo.FileName);
-            LabirintoParaDataGridView();
+            LimparDataGridViewCaminhos();
+            LabirintoParaDataGridView(lab);
             ColorirDataGridView();
             btnEncontrar.Enabled = true;
+            solucoesLista = new Lista<Lista<Movimento>>();
+            solucaoSelecionada = -1;
         }
 
         private void btnEncontrar_Click(object sender, EventArgs e)
         {
             btnAbrir.Enabled = false;
             btnEncontrar.Enabled = false;
-            solucionador = new Solucionador(lab);
-            tmrSleep.Enabled = true;
+            solucionador = new Solucionador(lab, dgvLabirinto, false);
             selecionarSolucoes = false;
+            solucionador.solucionar();
+
+            solucoes = solucionador.Solucoes.GetQtd();
+
+            ExibirSolucoes();
+
+            if (solucoes > 0)
+                MessageBox.Show(solucoes + " caminho(s) encontrado(s)", "Solucionado", MessageBoxButtons.OK);
+            else
+                MessageBox.Show("Nenhum caminho encontrado", "Sem saída", MessageBoxButtons.OK);
+
+            selecionarSolucoes = true;
+            btnAbrir.Enabled = true;
         }
 
         private void ColorirDataGridView()
@@ -77,33 +94,32 @@ namespace LabirintoBacktracking
             int colunas = int.Parse(reader.ReadLine().Trim());
             int linhas = int.Parse(reader.ReadLine().Trim());
             char[,] dados = new char[linhas, colunas];
+            char[,] copiaArray = new char[linhas, colunas];
 
             for (int i = 0; i < linhas; i++)
             {
                 string linhaLida = reader.ReadLine();
 
                 for (int j = 0; j < colunas; j++)
-                    dados[i,j] = linhaLida[j];
+                {
+                    dados[i, j] = linhaLida[j];
+                    copiaArray[i, j] = linhaLida[j];
+                }
             }
 
             lab = new Labirinto(dados);
+            copia = new Labirinto(copiaArray);
         }
 
-        private void LabirintoParaDataGridView()
+        private void LabirintoParaDataGridView(Labirinto l)
         {
-            int linhas = lab.Linhas;
-            int colunas = lab.Colunas;
+            int linhas = l.Linhas;
+            int colunas = l.Colunas;
 
             dgvLabirinto.Rows.Clear();
             dgvLabirinto.Refresh();
 
             dgvLabirinto.ColumnCount = colunas;
-
-            dgvCaminhos.Rows.Clear();
-            dgvCaminhos.ColumnCount = 1;
-            dgvCaminhos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            dgvCaminhos.Rows.Add("...");
-            dgvCaminhos.Refresh();
 
             for (int i = 0; i < colunas; i++)
             {
@@ -116,7 +132,7 @@ namespace LabirintoBacktracking
 
                 for (int j = 0; j < colunas; j++)
                 {
-                    string atual = lab.Dados[i, j] + "";
+                    string atual = l.Dados[i, j] + "";
                     if (atual != "#")
                         linhaAtual[j] = atual;
                     else linhaAtual[j] = " ";
@@ -126,38 +142,37 @@ namespace LabirintoBacktracking
             }
 
             dgvLabirinto.Refresh();
+            ColorirDataGridView();
         }
 
-        private void tmrSleep_Tick(object sender, EventArgs e)
+        private void LimparDataGridViewCaminhos()
         {
-            dgvLabirinto[solucionador.GetColunaAtual(), solucionador.GetLinhaAtual()].Style.BackColor = Color.LightSkyBlue;
+            dgvCaminhos.ColumnCount = 1;
+            dgvCaminhos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dgvCaminhos.Rows.Clear();
+            dgvCaminhos.Rows.Add("...");
+            dgvCaminhos.Refresh();
+        }
 
-            bool achouSaida, fimDaLinha;
-            solucionador.DarUmPasso(out achouSaida, out fimDaLinha);
-
-            dgvLabirinto[solucionador.GetColunaAtual(), solucionador.GetLinhaAtual()].Style.BackColor = Color.DeepSkyBlue;
-
-            if (achouSaida)
+        private void ExibirSolucoes()
+        {
+            for (int i = 0; i < solucoes; i++)
             {
-                Pilha<Movimento> solucao = solucionador.Solucoes.GetFim();
-
-                dgvCaminhos.Rows.Add(solucao.ToString());
-                solucoes++;
+                Lista<Movimento> s = solucionador.Solucoes.Get(i).ParaLista();
+                dgvCaminhos.Rows.Add(s.GetQtd() + " passo(s): " + s.ToString());
             }
+        }
 
-            if (fimDaLinha)
+        private void ExibirSolucao()
+        {
+            Lista<Movimento> solucao = solucionador.Solucoes.Get(solucaoSelecionada).ParaLista();
+            LabirintoParaDataGridView(copia);
+
+            int t = solucao.GetQtd();
+            for (int i = 0; i < t; i++)
             {
-                tmrSleep.Enabled = false;
-                if (solucoes == 0)
-                {
-                    MessageBox.Show("Este labirinto não têm nenhuma saída!", "Sem saída", MessageBoxButtons.OK);
-                }
-                else {
-                    dgvCaminhos.Rows[0].Cells[0].Value = "Selecione uma solução para visualizar";
-                    selecionarSolucoes = true;
-                }
-
-                btnAbrir.Enabled = true;
+                Movimento m = solucao.Get(i);
+                dgvLabirinto[m.Coluna, m.Linha].Style.BackColor = Color.LightSkyBlue;
             }
         }
 
@@ -168,13 +183,15 @@ namespace LabirintoBacktracking
 
         private void dgvCaminhos_SelectionChanged(object sender, EventArgs e)
         {
-            int row = dgvCaminhos.CurrentRow.Index;
+            if (!selecionarSolucoes)
+                dgvCaminhos.ClearSelection();
 
-            if (selecionarSolucoes && row > 0 && row != solucaoAtual)
+            int row = dgvCaminhos.CurrentRow.Index - 1;
+
+            if (row >= 0 && row != solucaoSelecionada)
             {
-                solucionador.SelecionarSolucao(row - 1);
-
-                while (solucionador.PassoSolucao()) { }
+                solucaoSelecionada = row;
+                ExibirSolucao();
             }
         }
     }

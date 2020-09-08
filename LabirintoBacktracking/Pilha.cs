@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LabirintoBacktracking
 {
-    class Pilha<X>
+    class Pilha<X> : ICloneable
     {
         Lista<X> lista = new Lista<X>();
 
@@ -40,9 +35,37 @@ namespace LabirintoBacktracking
             return lista.GetQtd();
         }
 
+        public Lista<X> ParaLista()
+        {
+            Lista<X> ret = new Lista<X>();
+
+            int tamanho = lista.GetQtd();
+
+            for (int i = 0; i < tamanho; i++)
+            {
+                ret.InserirNoFim(lista.Get(i));
+            }
+
+            return ret;
+        }
+
         public string ToString()
         {
             return lista.ToString();
+        }
+
+        public object Clone()
+        {
+            Pilha<X> ret = new Pilha<X>();
+
+            int tamanho = lista.GetQtd();
+
+            for (int i = 0; i < tamanho; i++)
+            {
+                ret.Adicionar(lista.Get(i));
+            }
+
+            return ret;
         }
     }
 }

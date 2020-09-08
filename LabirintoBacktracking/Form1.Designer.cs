@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.btnEncontrar = new System.Windows.Forms.Button();
             this.btnAbrir = new System.Windows.Forms.Button();
             this.dgvLabirinto = new System.Windows.Forms.DataGridView();
@@ -36,7 +35,6 @@
             this.lblLabirinto = new System.Windows.Forms.Label();
             this.lblCaminhos = new System.Windows.Forms.Label();
             this.dlgAbrirArquivo = new System.Windows.Forms.OpenFileDialog();
-            this.tmrSleep = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLabirinto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).BeginInit();
             this.SuspendLayout();
@@ -130,11 +128,6 @@
             this.dlgAbrirArquivo.RestoreDirectory = true;
             this.dlgAbrirArquivo.Title = "Procurar arquivos de labirinto";
             // 
-            // tmrSleep
-            // 
-            this.tmrSleep.Interval = 150;
-            this.tmrSleep.Tick += new System.EventHandler(this.tmrSleep_Tick);
-            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,7 +157,6 @@
         private System.Windows.Forms.Label lblLabirinto;
         private System.Windows.Forms.Label lblCaminhos;
         private System.Windows.Forms.OpenFileDialog dlgAbrirArquivo;
-        private System.Windows.Forms.Timer tmrSleep;
     }
 }
 

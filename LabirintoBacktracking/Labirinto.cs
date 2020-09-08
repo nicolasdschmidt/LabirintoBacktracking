@@ -18,8 +18,8 @@ namespace LabirintoBacktracking
         public Labirinto(char[,] dados)
         {
             Dados = dados;
-            Linhas = dados.GetLength(0);
-            Colunas = dados.GetLength(1);
+            Linhas = Dados.GetLength(0);
+            Colunas = Dados.GetLength(1);
         }
     }
 }

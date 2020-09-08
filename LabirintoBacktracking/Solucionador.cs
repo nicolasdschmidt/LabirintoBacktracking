@@ -1,158 +1,120 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace LabirintoBacktracking
 {
     class Solucionador
     {
-        private Labirinto lab;// o labirinto
-        private Pilha<Movimento> passos;// os movimentos de uma solução
+        private Labirinto lab;
+        private DataGridView dgv;
+        private Pilha<Movimento> passos;
+        private Movimento passoAtual;
         public Lista<Pilha<Movimento>> Solucoes { get; }
 
-        private int colunaAtual;//as coordenadas 
-        private int linhaAtual;//atuais
+        private (int, int)[] direcoes = { (-1, 1), (0,1), (1,1), (1,0), (1,-1), (0,-1), (-1, -1), (-1, 0)};
 
-        private bool achouASaida;//
+        private int colunaAtual;
+        private int linhaAtual;
 
-        Pilha<Movimento> solucaoAtual;
+        private bool naoMostrarProcesso;
 
-        public Solucionador(Labirinto labirinto)
+        public Solucionador (Labirinto lab, DataGridView dgv, bool naoMostrarProcesso)
         {
-            this.lab = labirinto;   //recebe o labirinto
-
-            this.passos = new Pilha<Movimento>(); //instancia os movimentos
+            this.lab = lab;
+            this.dgv = dgv;
+            this.naoMostrarProcesso = naoMostrarProcesso;
+            linhaAtual = colunaAtual = 1;
             Solucoes = new Lista<Pilha<Movimento>>();
-
-            colunaAtual = 1;    //define as coordenadas
-            linhaAtual = 1;     //iniciais do labirinto
-
-            achouASaida = false;//define que a saida ainda não foi encontrada
         }
-
-       
-        public int GetColunaAtual() { return colunaAtual; }
-
-        public int GetLinhaAtual() { return linhaAtual; }
-
-        public bool GetAchouSaida() { return achouASaida; }
-
-
-        /* Algoritmo de resolução por passos, um método Passo vai executar apenas 1 passo de tentativa de solução
-         * (tem que ser em passos pra conseguirmos mostrar a solução sendo processada no DataGridView)
-         */
-        //public bool DarUmPasso()//tenta dar um passo. se conseguir retorna true e, se não, retorna false
-        //{
-
-        //    for (int i = -1; i <= 1; i++)
-        //    {
-        //        for (int o = -1; o <= 1; o++)
-        //        {
-        //            //se a posição que ele achou não for uma parede e 
-        //            //nem uma posição ja explorada do labirinto
-                    
-        //            if (this.lab.Dados[linhaAtual + i, colunaAtual + o] != '#' && this.lab.Dados[linhaAtual + i, colunaAtual + o] != 'p')
-        //            {
-        //                this.linhaAtual += i;   //define as novas
-        //                this.colunaAtual += o;  //coordenadas
-
-        //                if (this.lab.Dados[linhaAtual, colunaAtual] == 'S')
-        //                    this.achouASaida = true;
-
-        //                this.lab.Dados[linhaAtual, colunaAtual] = 'p'; //marca que já passou                      
-
-        //                this.passos.Adicionar(new Movimento(i, o)); //adiciona o movimento que acabou de ser feito
-
-        //                return true; //retorna que achou caminho
-                        
-        //            }                
-        //        }
-        //    }
-        //    return false;
-        //}
-
-        public void DarUmPasso(out bool achouSaida, out bool fimDaLinha)
+        
+        public void solucionar()
         {
-            fimDaLinha = false;
-            achouSaida = false;
+            passos = new Pilha<Movimento>();
+            passoAtual = new Movimento(1, 1); // começamos sempre na posição (1,1), desconsiderando a letra I no arquivo
+            passos.Adicionar(passoAtual);
+            atualizarDataGridView(false);
 
-            bool temCaminho = Verificar();
-            if (achouASaida)
+            bool aindaTemCaminhos = true;
+
+            while (aindaTemCaminhos)
             {
-                achouSaida = true;
-            }
-            
-            if (!temCaminho)
-            {
-                bool temComoVoltar = VoltarUmPasso();
-                if (!temComoVoltar)
-                {
-                    fimDaLinha = true;
-                }
+                bool andou = Avancar();
+                if (!andou)
+                    aindaTemCaminhos = Voltar();
             }
         }
 
-        private bool Verificar()
+        private bool Avancar()
         {
-            achouASaida = false;
-            lab.Dados[linhaAtual, colunaAtual] = 'p';
-            for (int i = -1; i <= 1; i++)
+            int inicio = 0;
+            char atual = lab.Dados[linhaAtual, colunaAtual];
+            if (atual != ' ' && atual != 'I')
+                inicio = int.Parse(atual + "") + 1;
+
+            for (int i = inicio; i < direcoes.Length; i++)
             {
-                for (int j = -1; j <= 1; j++)
+                int linha = linhaAtual + direcoes[i].Item1;
+                int coluna = colunaAtual + direcoes[i].Item2;
+
+                passoAtual = new Movimento(linha, coluna, i);
+
+                char pos = lab.Dados[linha, coluna];
+                if (pos == ' ')
                 {
-                    if (i == 0 && j == 0) continue;
-                    if (lab.Dados[linhaAtual + i, colunaAtual + j] == 'S')
-                    {
-                        passos.Adicionar(new Movimento(linhaAtual + i, colunaAtual + j));
-                        Solucoes.InserirNoFim(passos);
-                        achouASaida = true;
-                    } else if (lab.Dados[linhaAtual + i, colunaAtual + j] != '#' && lab.Dados[linhaAtual + i, colunaAtual + j] != 'p')
-                    {
-                        linhaAtual += i;
-                        colunaAtual += j;
-
-                        passos.Adicionar(new Movimento(linhaAtual, colunaAtual));
-                        
-                        lab.Dados[linhaAtual, colunaAtual] = 'p';
-
-                        return true;
-                    }
+                    lab.Dados[linhaAtual, colunaAtual] = passoAtual.Direcao.ToString()[0];
+                    linhaAtual = passoAtual.Linha;
+                    colunaAtual = passoAtual.Coluna;
+                    passos.Adicionar(passoAtual);
+                    atualizarDataGridView(false);
+                    return true;
+                } else if (pos == 'S')
+                {
+                    GuardarSolucao();
+                    return false;
                 }
             }
             return false;
         }
 
-        public bool VoltarUmPasso()
+        private bool Voltar()
         {
+            passoAtual = passos.Desempilhar();
+            lab.Dados[passoAtual.Linha, passoAtual.Coluna] = ' ';
+            atualizarDataGridView(true);
+
             if (passos.Vazia())
                 return false;
 
-            Movimento aux = passos.Desempilhar();
-            linhaAtual = aux.Linha;
-            colunaAtual = aux.Coluna;
-
+            Movimento anterior = passos.Espiar();
+            linhaAtual = anterior.Linha;
+            colunaAtual = anterior.Coluna;
             return true;
         }
 
-        public void SelecionarSolucao(int index)
+        private void GuardarSolucao()
         {
-            linhaAtual = colunaAtual = 1;
-            solucaoAtual = Solucoes.Get(index);
+            passos.Adicionar(passoAtual);
+            Solucoes.InserirNoFim((Pilha<Movimento>)passos.Clone());
+            passos.Desempilhar();
         }
 
-        public bool PassoSolucao()
+        private void atualizarDataGridView(bool backtrack)
         {
-            if (solucaoAtual.Vazia())
-                return false;
+            if (naoMostrarProcesso)
+                return;
 
-            Movimento atual = solucaoAtual.Desempilhar();
-            linhaAtual = atual.Linha;
-            colunaAtual = atual.Coluna;
-
-            return true;
+            if (backtrack)
+            {
+                dgv[passoAtual.Coluna, passoAtual.Linha].Style.BackColor = Color.White;
+                //dgv[passoAtual.Linha, passoAtual.Coluna].Style.ForeColor = Color.White;
+            } else
+            {
+                dgv[passoAtual.Coluna, passoAtual.Linha].Style.BackColor = Color.LightSkyBlue;
+                //dgv[passoAtual.Linha, passoAtual.Coluna].Style.ForeColor = Color.DeepSkyBlue;
+            }
+            Application.DoEvents();
         }
-    }
+    }   
 }
 

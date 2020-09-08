@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace LabirintoBacktracking
 {
@@ -61,7 +59,7 @@ namespace LabirintoBacktracking
             if (primeiro == null)
             {
                 primeiro = new No(i);
-                primeiro = ultimo;
+                ultimo = primeiro;
             }
             else
             {
@@ -156,7 +154,7 @@ namespace LabirintoBacktracking
             return ret;
         }
 
-        public string ToString()
+        public override string ToString()
         {
             string ret = "";
 
