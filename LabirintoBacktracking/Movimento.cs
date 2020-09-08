@@ -1,5 +1,8 @@
 ﻿namespace LabirintoBacktracking
 {
+    /// <summary>
+    /// Representa um passo de determinada tentativa de solucionar um Labirinto.
+    /// </summary>
     class Movimento
     {
         public int Linha { get; set; }

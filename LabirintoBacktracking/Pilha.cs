@@ -2,6 +2,10 @@
 
 namespace LabirintoBacktracking
 {
+    /// <summary>
+    /// Representa uma Pilha genérica.
+    /// </summary>
+    /// <typeparam name="X">tipo</typeparam>
     class Pilha<X> : ICloneable
     {
         Lista<X> lista = new Lista<X>();

@@ -2,8 +2,15 @@
 
 namespace LabirintoBacktracking
 {
+    /// <summary>
+    /// Representa uma lista genérica simples duplamente ligada.
+    /// </summary>
+    /// <typeparam name="X">tipo</typeparam>
     class Lista<X>
     {
+        /// <summary>
+        /// Representa um Nó genérico de uma lista ligada.
+        /// </summary>
         protected class No
         {
             public X Info { get; set; }

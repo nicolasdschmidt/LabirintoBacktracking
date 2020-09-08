@@ -29,3 +29,4 @@ Projeto I - Estruturas de Dados II, prof. Francisco Rodrigues
   * Melhorar exibição de soluções
   * Implementar opção de resolução instantânea
   * Implementar tratamento de exceções
+  * Adicionar documentação e comentários

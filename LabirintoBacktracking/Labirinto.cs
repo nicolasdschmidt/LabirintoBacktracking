@@ -1,5 +1,8 @@
 ﻿namespace LabirintoBacktracking
 {
+    /// <summary>
+    /// Representa um Labirinto bidimensional.
+    /// </summary>
     class Labirinto
     {
         public int Linhas { get; }
