@@ -35,6 +35,7 @@
             this.lblLabirinto = new System.Windows.Forms.Label();
             this.lblCaminhos = new System.Windows.Forms.Label();
             this.dlgAbrirArquivo = new System.Windows.Forms.OpenFileDialog();
+            this.cbInstantaneo = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLabirinto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).BeginInit();
             this.SuspendLayout();
@@ -43,9 +44,9 @@
             // 
             this.btnEncontrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEncontrar.Enabled = false;
-            this.btnEncontrar.Location = new System.Drawing.Point(847, 12);
+            this.btnEncontrar.Location = new System.Drawing.Point(837, 12);
             this.btnEncontrar.Name = "btnEncontrar";
-            this.btnEncontrar.Size = new System.Drawing.Size(75, 39);
+            this.btnEncontrar.Size = new System.Drawing.Size(85, 39);
             this.btnEncontrar.TabIndex = 0;
             this.btnEncontrar.Text = "Encontrar caminhos";
             this.btnEncontrar.UseVisualStyleBackColor = true;
@@ -54,7 +55,7 @@
             // btnAbrir
             // 
             this.btnAbrir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAbrir.Location = new System.Drawing.Point(766, 12);
+            this.btnAbrir.Location = new System.Drawing.Point(756, 12);
             this.btnAbrir.Name = "btnAbrir";
             this.btnAbrir.Size = new System.Drawing.Size(75, 39);
             this.btnAbrir.TabIndex = 1;
@@ -73,12 +74,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvLabirinto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLabirinto.ColumnHeadersVisible = false;
-            this.dgvLabirinto.Location = new System.Drawing.Point(15, 57);
+            this.dgvLabirinto.Location = new System.Drawing.Point(15, 72);
             this.dgvLabirinto.MultiSelect = false;
             this.dgvLabirinto.Name = "dgvLabirinto";
             this.dgvLabirinto.ReadOnly = true;
             this.dgvLabirinto.RowHeadersVisible = false;
-            this.dgvLabirinto.Size = new System.Drawing.Size(417, 433);
+            this.dgvLabirinto.Size = new System.Drawing.Size(417, 418);
             this.dgvLabirinto.TabIndex = 2;
             this.dgvLabirinto.SelectionChanged += new System.EventHandler(this.dgvLabirinto_SelectionChanged);
             // 
@@ -92,12 +93,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCaminhos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCaminhos.ColumnHeadersVisible = false;
-            this.dgvCaminhos.Location = new System.Drawing.Point(445, 57);
+            this.dgvCaminhos.Location = new System.Drawing.Point(445, 72);
             this.dgvCaminhos.MultiSelect = false;
             this.dgvCaminhos.Name = "dgvCaminhos";
             this.dgvCaminhos.ReadOnly = true;
             this.dgvCaminhos.RowHeadersVisible = false;
-            this.dgvCaminhos.Size = new System.Drawing.Size(477, 433);
+            this.dgvCaminhos.Size = new System.Drawing.Size(477, 418);
             this.dgvCaminhos.TabIndex = 3;
             this.dgvCaminhos.SelectionChanged += new System.EventHandler(this.dgvCaminhos_SelectionChanged);
             // 
@@ -106,7 +107,7 @@
             this.lblLabirinto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lblLabirinto.AutoSize = true;
-            this.lblLabirinto.Location = new System.Drawing.Point(12, 38);
+            this.lblLabirinto.Location = new System.Drawing.Point(12, 56);
             this.lblLabirinto.Name = "lblLabirinto";
             this.lblLabirinto.Size = new System.Drawing.Size(47, 13);
             this.lblLabirinto.TabIndex = 4;
@@ -117,7 +118,7 @@
             this.lblCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCaminhos.AutoSize = true;
-            this.lblCaminhos.Location = new System.Drawing.Point(442, 38);
+            this.lblCaminhos.Location = new System.Drawing.Point(442, 56);
             this.lblCaminhos.Name = "lblCaminhos";
             this.lblCaminhos.Size = new System.Drawing.Size(115, 13);
             this.lblCaminhos.TabIndex = 5;
@@ -128,11 +129,24 @@
             this.dlgAbrirArquivo.RestoreDirectory = true;
             this.dlgAbrirArquivo.Title = "Procurar arquivos de labirinto";
             // 
+            // cbInstantaneo
+            // 
+            this.cbInstantaneo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbInstantaneo.AutoSize = true;
+            this.cbInstantaneo.Enabled = false;
+            this.cbInstantaneo.Location = new System.Drawing.Point(837, 52);
+            this.cbInstantaneo.Name = "cbInstantaneo";
+            this.cbInstantaneo.Size = new System.Drawing.Size(82, 17);
+            this.cbInstantaneo.TabIndex = 6;
+            this.cbInstantaneo.Text = "Instantâneo";
+            this.cbInstantaneo.UseVisualStyleBackColor = true;
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 505);
+            this.Controls.Add(this.cbInstantaneo);
             this.Controls.Add(this.lblCaminhos);
             this.Controls.Add(this.lblLabirinto);
             this.Controls.Add(this.dgvCaminhos);
@@ -157,6 +171,7 @@
         private System.Windows.Forms.Label lblLabirinto;
         private System.Windows.Forms.Label lblCaminhos;
         private System.Windows.Forms.OpenFileDialog dlgAbrirArquivo;
+        private System.Windows.Forms.CheckBox cbInstantaneo;
     }
 }
 

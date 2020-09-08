@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -33,6 +34,9 @@ namespace LabirintoBacktracking
             passoAtual = new Movimento(1, 1); // começamos sempre na posição (1,1), desconsiderando a letra I no arquivo
             passos.Adicionar(passoAtual);
             AtualizarDataGridView(false);
+
+            if (lab.Dados[linhaAtual, colunaAtual] == '#')
+                throw new Exception("(1,1) não está vazio");
 
             bool aindaTemCaminhos = true;
 

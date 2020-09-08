@@ -30,6 +30,7 @@ namespace LabirintoBacktracking
             LabirintoParaDataGridView(lab);
             ColorirDataGridView();
             btnEncontrar.Enabled = true;
+            cbInstantaneo.Enabled = true;
             solucaoSelecionada = -1;
         }
 
@@ -37,18 +38,27 @@ namespace LabirintoBacktracking
         {
             btnAbrir.Enabled = false;
             btnEncontrar.Enabled = false;
-            solucionador = new Solucionador(lab, dgvLabirinto, false);
+            cbInstantaneo.Enabled = false;
+            solucionador = new Solucionador(lab, dgvLabirinto, cbInstantaneo.Checked);
             selecionarSolucoes = false;
-            solucionador.Solucionar();
+            try
+            {
+                solucionador.Solucionar();
 
-            solucoes = solucionador.Solucoes.GetQtd();
+                solucoes = solucionador.Solucoes.GetQtd();
 
-            ExibirSolucoes();
+                dgvCaminhos.Rows[0].Cells[0].Value = "Selecione uma solução para mostrar o caminho.";
 
-            if (solucoes > 0)
-                MessageBox.Show(solucoes + " caminho(s) encontrado(s)", "Solucionado", MessageBoxButtons.OK);
-            else
-                MessageBox.Show("Nenhum caminho encontrado", "Sem saída", MessageBoxButtons.OK);
+                ExibirSolucoes();
+
+                if (solucoes > 0)
+                    dgvCaminhos.Rows[0].Cells[0].Value = solucoes + " caminho(s) encontrado(s). Selecione uma solução para mostrar o caminho.";
+                else
+                    dgvCaminhos.Rows[0].Cells[0].Value = "Sem saída: nenhum caminho encontrado.";
+            } catch (Exception err)
+            {
+                MessageBox.Show(err.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             selecionarSolucoes = true;
             btnAbrir.Enabled = true;
