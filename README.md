@@ -24,3 +24,8 @@ Projeto I - Estruturas de Dados II, prof. Francisco Rodrigues
   * Implementar busca com backtracking
   * Implementar exibição do caminho
   * Implementar seleção de qual solução exibir
+* 08/setembro
+  * Melhorar algoritmo de busca
+  * Melhorar exibição de soluções
+  * Implementar opção de resolução instantânea
+  * Implementar tratamento de exceções
