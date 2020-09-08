@@ -6,7 +6,7 @@ namespace LabirintoBacktracking
     {
         Lista<X> lista = new Lista<X>();
 
-        public Pilha() {}
+        public Pilha() { }
 
         public bool Vazia()
         {
@@ -49,7 +49,7 @@ namespace LabirintoBacktracking
             return ret;
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return lista.ToString();
         }

@@ -1,4 +1,3 @@
-using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,14 +11,14 @@ namespace LabirintoBacktracking
         private Movimento passoAtual;
         public Lista<Pilha<Movimento>> Solucoes { get; }
 
-        private (int, int)[] direcoes = { (-1, 1), (0,1), (1,1), (1,0), (1,-1), (0,-1), (-1, -1), (-1, 0)};
+        private (int, int)[] direcoes = { (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0) };
 
         private int colunaAtual;
         private int linhaAtual;
 
         private bool naoMostrarProcesso;
 
-        public Solucionador (Labirinto lab, DataGridView dgv, bool naoMostrarProcesso)
+        public Solucionador(Labirinto lab, DataGridView dgv, bool naoMostrarProcesso)
         {
             this.lab = lab;
             this.dgv = dgv;
@@ -27,13 +26,13 @@ namespace LabirintoBacktracking
             linhaAtual = colunaAtual = 1;
             Solucoes = new Lista<Pilha<Movimento>>();
         }
-        
-        public void solucionar()
+
+        public void Solucionar()
         {
             passos = new Pilha<Movimento>();
             passoAtual = new Movimento(1, 1); // começamos sempre na posição (1,1), desconsiderando a letra I no arquivo
             passos.Adicionar(passoAtual);
-            atualizarDataGridView(false);
+            AtualizarDataGridView(false);
 
             bool aindaTemCaminhos = true;
 
@@ -66,9 +65,10 @@ namespace LabirintoBacktracking
                     linhaAtual = passoAtual.Linha;
                     colunaAtual = passoAtual.Coluna;
                     passos.Adicionar(passoAtual);
-                    atualizarDataGridView(false);
+                    AtualizarDataGridView(false);
                     return true;
-                } else if (pos == 'S')
+                }
+                else if (pos == 'S')
                 {
                     GuardarSolucao();
                     return false;
@@ -81,7 +81,7 @@ namespace LabirintoBacktracking
         {
             passoAtual = passos.Desempilhar();
             lab.Dados[passoAtual.Linha, passoAtual.Coluna] = ' ';
-            atualizarDataGridView(true);
+            AtualizarDataGridView(true);
 
             if (passos.Vazia())
                 return false;
@@ -99,22 +99,18 @@ namespace LabirintoBacktracking
             passos.Desempilhar();
         }
 
-        private void atualizarDataGridView(bool backtrack)
+        private void AtualizarDataGridView(bool backtrack)
         {
             if (naoMostrarProcesso)
                 return;
 
             if (backtrack)
-            {
                 dgv[passoAtual.Coluna, passoAtual.Linha].Style.BackColor = Color.White;
-                //dgv[passoAtual.Linha, passoAtual.Coluna].Style.ForeColor = Color.White;
-            } else
-            {
+            else
                 dgv[passoAtual.Coluna, passoAtual.Linha].Style.BackColor = Color.LightSkyBlue;
-                //dgv[passoAtual.Linha, passoAtual.Coluna].Style.ForeColor = Color.DeepSkyBlue;
-            }
+
             Application.DoEvents();
         }
-    }   
+    }
 }
 

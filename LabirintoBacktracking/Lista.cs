@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 
 namespace LabirintoBacktracking
 {
@@ -11,7 +10,7 @@ namespace LabirintoBacktracking
             public No Ante { get; set; }
             public No Prox { get; set; }
 
-            public No (X i, No a, No p)
+            public No(X i, No a, No p)
             {
                 Info = i;
                 Ante = a;
@@ -42,7 +41,8 @@ namespace LabirintoBacktracking
             {
                 ultimo = new No(i);
                 primeiro = ultimo;
-            } else
+            }
+            else
             {
                 No novo = new No(i);
                 novo.Ante = ultimo;
@@ -75,7 +75,7 @@ namespace LabirintoBacktracking
             if (primeiro == null)
                 throw new Exception("Nada a remover");
 
-            if (primeiro == ultimo) 
+            if (primeiro == ultimo)
             {
                 primeiro = null;
                 ultimo = null;

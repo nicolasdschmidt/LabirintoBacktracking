@@ -10,8 +10,6 @@ namespace LabirintoBacktracking
         Labirinto lab, copia;
         Solucionador solucionador;
 
-        Lista<Lista<Movimento>> solucoesLista;
-
         int solucoes = 0;
 
         int solucaoSelecionada = -1;
@@ -32,7 +30,6 @@ namespace LabirintoBacktracking
             LabirintoParaDataGridView(lab);
             ColorirDataGridView();
             btnEncontrar.Enabled = true;
-            solucoesLista = new Lista<Lista<Movimento>>();
             solucaoSelecionada = -1;
         }
 
@@ -42,7 +39,7 @@ namespace LabirintoBacktracking
             btnEncontrar.Enabled = false;
             solucionador = new Solucionador(lab, dgvLabirinto, false);
             selecionarSolucoes = false;
-            solucionador.solucionar();
+            solucionador.Solucionar();
 
             solucoes = solucionador.Solucoes.GetQtd();
 
@@ -87,7 +84,7 @@ namespace LabirintoBacktracking
             }
         }
 
-        private void ArquivoParaLabirinto (string arquivo)
+        private void ArquivoParaLabirinto(string arquivo)
         {
             StreamReader reader = new StreamReader(arquivo);
 
